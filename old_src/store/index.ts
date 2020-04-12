@@ -5,38 +5,40 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    player1: {
-      name: '',
-      ball: 0,
-      goal: 0,
-      safety: 0,
-      ace: 0,
-      breakrun: 0
-    },
-    player2: {
-      name: '',
-      ball: 0,
-      goal: 0,
-      safety: 0,
-      ace: 0,
-      breakrun: 0
-    },
-    inning: 0,
-    dead: 0
+    scoreForm: {
+      player1: {
+        name: '',
+        ball: 0,
+        goal: 0,
+        safety: 0,
+        ace: 0,
+        breakrun: 0
+      },
+      player2: {
+        name: '',
+        ball: 0,
+        goal: 0,
+        safety: 0,
+        ace: 0,
+        breakrun: 0
+      },
+      inning: 0,
+      dead: 0
+    }
   },
   getters: {
-    getScoreForm: (state, getters) => {
-      return state;
+    getScoreForm: (state, getters) => () => {
+      console.log("getされた:"+state.scoreForm);
+      return state.scoreForm;
     }
   },
   mutations: {
     save(state, score){
-      console.log("before:"+localStorage.getItem('store'));
-      
+      console.log("保存します。");
       localStorage.setItem('store', JSON.stringify(score));
-      console.log("after:"+localStorage.getItem('store'));
     },
     load(state){
+      console.log("ロードします");
       if(localStorage.getItem('store')) {
         const store = JSON.parse(localStorage.getItem('store') as string);
         this.replaceState(Object.assign(state, store));
@@ -46,11 +48,11 @@ export default new Vuex.Store({
   },
   actions: {
     doSave({commit}, payload) {
-      console.log("doSave before:"+JSON.stringify(this.state));
+      console.log("save start.");
       commit('save', payload)
-      console.log("doSave after:"+JSON.stringify(this.state));
     },
     doLoad({commit}) {
+      console.log("load start.");
       commit('load')
     }
   },

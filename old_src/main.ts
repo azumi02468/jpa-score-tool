@@ -11,7 +11,7 @@ new Vue({
   router,
   store,
   render: h => h(App),
-  beforeCreate() {
+  beforeCreate(){
     this.$store.dispatch('doLoad');
   }
 }).$mount('#app')
